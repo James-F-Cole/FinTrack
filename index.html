@@ -3,79 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/style.css">
+
     <title>FinTrack | Personal Finance Manager</title>
 </head>
+
 <body>
-    <aside class="sidebar">
-        <h2>FinTrack</h2>
-        <nav>
-            <ul>
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Transactions</a></li>
-                <li><a href="#">Categories</a></li>
-                <li><a href="#">Reports</a></li>
-                <li><a href="#">Budgets</a></li>
-                <li><a href="#">Settings</a></li>
-            </ul>
-        </nav>
-    </aside>
-    <main>
-        <header>
 
-            <h1>FinTrack | Personal Finance Manager</h1>
+    <div class="app-container">
 
-            <p>Welcome to Fintrack, a system built to help YOU manage your personal finances.</p>
+        <aside class="sidebar">
+            <h2>FinTrack</h2>
 
-        </header>
-        <section id="summary">
+            <nav>
+                <ul>
+                    <li><a href="#summary">Dashboard</a></li>
+                    <li><a href="#financial-overview">Financial Overview</a></li>
+                    <li><a href="#recent-transactions">Transactions</a></li>                    
+                </ul>
+            </nav>
+        </aside>
 
-            <h2>Summary</h2>
 
-            <article class="summary-card">
-                <h2>Total Balance:</h2>
-                <p id="total-balance">$2000</p>
-            </article>
+        <main>
 
-            <article class="summary-card">
-                <h2>Total Income:</h2>
-                <p id="total-income">$4000</p>
-            </article>
+            <header>
 
-            <article class="summary-card">
-                <h2>Total Expenses:</h2>
-                <p id="total-expenses">$1000</p>
-            </article>
+                <div>
+                    <h1>FinTrack | Personal Finance Manager</h1>
 
-            <article class="summary-card">
-                <h2>Monthly Savings:</h2>
-                <p id="monthly-savivngs">$1000</p>
-            </article>
+                    <p>
+                        Welcome to FinTrack, a system built to help you
+                        manage your personal finances.
+                    </p>
+                </div>
 
-        </section>
-        <section id="financial-overview">
-            <h2>Financial Overview</h2>
+                <button id="menu-toggle" type="button"
+                    aria-label="Toggle navigation">
+                    ☰
+                </button>
 
-            <figure class="financial-chart"><figcaption>Income vs. Expenses</figcaption></figure>
-            <figure class="financial-chart"><figcaption>Expenses by Categories</figcaption></figure>
-        </section>
-        <h2>Recent Transactions</h2>
-        <section id="recent-transactions">
-            <table>
-                <thead>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Category</th>
-                    <th>Type</th>
-                    <th>Amount</th>
-                    <th>Action</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-    </main>
+                <div class="theme-control">
+                    <label for="theme-select">Appearance</label>
+
+                    <select id="theme-select">
+                        <option value="system">System</option>
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                </div>
+
+            </header>
+
+
+            <section id="summary">
+
+                <h2>Financial Summary</h2>
+
+                <article class="summary-card">
+                    <h2>Total Balance</h2>
+                    <p>USD: <span id="total-balance-usd">$0.00</span></p>
+                    <p>LRD: <span id="total-balance-lrd">L$0.00</span></p>
+                </article>
+
+                <article class="summary-card">
+                    <h2>Total Income</h2>
+                    <p>USD: <span id="total-income-usd">$0.00</span></p>
+                    <p>LRD: <span id="total-income-lrd">L$0.00</span></p>
+                </article>
+
+                <article class="summary-card">
+                    <h2>Total Expenses</h2>
+                    <p>USD: <span id="total-expenses-usd">$0.00</span></p>
+                    <p>LRD: <span id="total-expenses-lrd">L$0.00</span></p>
+                </article>
+
+            </section>
+
+
+            <section id="financial-overview">
+
+                <h2>Financial Overview</h2>
+                <div class="chart-controls">
+                    <label for="chart-currency">Select Account:</label>
+
+                    <select id="chart-currency">
+                        <option value="USD">USD Account</option>
+                        <option value="LRD">LRD Account</option>
+                    </select>
+                </div>
+
+                <div class="charts-container">
+
+                    <figure class="financial-chart">
+                        <figcaption>Income vs. Expenses</figcaption>
+                        <canvas id="income-expense-chart"></canvas>
+                    </figure>
+
+                    <figure class="financial-chart">
+                        <figcaption>Expenses by Category</figcaption>
+                        <canvas id="category-expense-chart"></canvas>
+                    </figure>
+
+                </div>
+
+            </section>
+
+
+            <section id="recent-transactions">
+
+                <h2>Recent Transactions</h2>
+
+                <button id="add-transaction-btn" type="button">
+                    + Add Transaction
+                </button>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="transactions-list">
+                        </tbody>
+                    </table>
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <dialog id="transaction-dialog"
+            aria-labelledby="form-title">
+
+            <form id="transaction-form">
+
+                <h2 id="form-title">Add Transaction</h2>
+
+                <label for="description">Description</label>
+                <input type="text" id="description" maxlength="100" required>
+
+                <label for="amount">Amount</label>
+                <input type="number" id="amount" min="0.01" step="0.01" required>
+
+                <label for="currency">Account Currency</label>
+                <select id="currency" required>
+                    <option value="USD">USD ($)</option>
+                    <option value="LRD">LRD (LR$)</option>
+                </select>
+
+                <label for="type">Transaction Type</label>
+                <select id="type" required>
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
+                </select>
+
+                <label for="category">Category</label>
+                <select id="category" required></select>
+
+                <label for="date">Date</label>
+                <input type="date" id="date" required>
+
+                <div class="form-actions">
+
+                    <button type="submit" id="save-transaction-btn">
+                        Save Transaction
+                    </button>
+
+                    <button type="button" id="cancel-transaction-btn">
+                        Cancel
+                    </button>
+
+                </div>
+
+            </form>
+
+        </dialog>
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="js/storage.js" defer></script>
+    <script src="js/transactions.js" defer></script>
+    <script src="js/app.js" defer></script>
+
 </body>
 </html>
